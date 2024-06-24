@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <div class="question-number" id="question-number">1/3</div>
+
+        <div class="question" id="question-container">
+            <h2>Question 1: How satisfied are you with our service?</h2>
+            <div class="slider-container">
+                <span>0</span>
+                <input type="range" id="q1" class="slider" min="0" max="10" value="5">
+                <span>10</span>
+            </div>
+            <div class="scale-labels">
+                <span>Strongly Disagree</span>
+                <span>Disagree</span>
+                <span>Neutral</span>
+                <span>Agree</span>
+                <span>Strongly Agree</span>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <button id="prev-btn" disabled>Prev</button>
+            <button id="next-btn">Next</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "How satisfied are you with our service?",
+            "How likely are you to recommend us to a friend?",
+            "How would you rate our customer support?"
+        ];
+        let currentQuestion = 0;
+
+        const questionContainer = document.getElementById('question-container');
+        const questionNumber = document.getElementById('question-number');
+        const progressBar = document.getElementById('progress-bar');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+
+        function updateQuestion() {
+            questionContainer.querySelector('h2').textContent = `Question ${currentQuestion + 1}: ${questions[currentQuestion]}`;
+            questionNumber.textContent = `${currentQuestion + 1}/${questions.length}`;
+            progressBar.style.width = ((currentQuestion + 1) / questions.length) * 100 + '%';
+
+            prevBtn.disabled = currentQuestion === 0;
+            nextBtn.textContent = currentQuestion === questions.length - 1 ? 'Finish' : 'Next';
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                updateQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                updateQuestion();
+            } else {
+                alert('Assessment Completed!');
+            }
+        });
+
+        updateQuestion();
+    </script>
+
+</body>
+</html>
